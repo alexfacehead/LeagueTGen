@@ -22,6 +22,7 @@ namespace TournamentCodeGenerator
     {
         public MainWindow()
         {
+            
             InitializeComponent();
             ComboboxItem item = new ComboboxItem();
             item.Text = "Summoners Rift";
@@ -149,15 +150,19 @@ namespace TournamentCodeGenerator
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string name = Name.Text;
-            string pass = Pass.Password;
+            string name = Name.WaterTextbox.Text;
+            string pass = Pass.WaterPasswordbox.Password;
             if (string.IsNullOrEmpty(name))
                 name = RandomGen(10);
             if (string.IsNullOrEmpty(pass))
                 pass = RandomGen(10);
             //*/
-
-            if (!name.ToLower().Contains("'s game"))
+            if (name.StartsWith("\"") && name.EndsWith("\""))
+            {
+                name = name.Substring(1);
+                name = name.Remove(name.Length - 1);
+            }
+            else if (!name.ToLower().Contains("'s game"))
                 name += "'s game";
 
             Result.Text = "pvpnet://lol/customgame/joinorcreate";
@@ -167,17 +172,17 @@ namespace TournamentCodeGenerator
             Result.Text += "/spec" + (SpectateMode.SelectedItem as ComboboxItem).Value.ToString();
             string json = "";
 
-            if (String.IsNullOrEmpty(Report.Text))
+            if (String.IsNullOrEmpty(Report.WaterTextbox.Text))
             {                
                 json = "{ \"name\": \"" + name + "\", \"password\": \"" + pass + "\" }";
             }
-            else if (!String.IsNullOrEmpty(Extra.Text))
+            else if (!String.IsNullOrEmpty(Extra.WaterTextbox.Text))
             {
-                json = "{ \"name\": \"" + name + "\",\"extra\":\""+ Extra.Text +"\" \"password\": \"" + pass + "\" \"report\":\""+ Report.Text +"\"}";
+                json = "{ \"name\": \"" + name + "\",\"extra\":\"" + Extra.WaterTextbox.Text + "\" \"password\": \"" + pass + "\" \"report\":\"" + Report.WaterTextbox.Text + "\"}";
             }
             else
             {
-                json = "{ \"name\": \"" + name + "\",\"extra\":\"\" \"password\": \"" + pass + "\" \"report\":\"" + Report.Text + "\"}";
+                json = "{ \"name\": \"" + name + "\",\"extra\":\"\" \"password\": \"" + pass + "\" \"report\":\"" + Report.WaterTextbox.Text + "\"}";
             }
 
             //Also "report" to get riot to send a report back, and "extra" to have data sent so you can identify it (passbackDataPacket)
