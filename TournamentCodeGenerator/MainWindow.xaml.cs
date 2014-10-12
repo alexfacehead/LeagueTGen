@@ -113,14 +113,8 @@ namespace TournamentCodeGenerator
             Type.SelectedIndex = 0;
 
             item = new ComboboxItem();
-            item.Text = "No Spectators";
-            item.Value = "NONE";
-            SpectateMode.Items.Add(item);
-            SpectateMode.SelectedIndex = 0;
-
-            item = new ComboboxItem();
-            item.Text = "Lobby Only";
-            item.Value = "LOBBYONLY";
+            item.Text = "All";
+            item.Value = "ALL";
             SpectateMode.Items.Add(item);
             SpectateMode.SelectedIndex = 0;
 
@@ -131,8 +125,14 @@ namespace TournamentCodeGenerator
             SpectateMode.SelectedIndex = 0;
 
             item = new ComboboxItem();
-            item.Text = "All";
-            item.Value = "ALL";
+            item.Text = "Lobby Only";
+            item.Value = "LOBBYONLY";
+            SpectateMode.Items.Add(item);
+            SpectateMode.SelectedIndex = 0;
+
+            item = new ComboboxItem();
+            item.Text = "No Spectators";
+            item.Value = "NONE";
             SpectateMode.Items.Add(item);
             SpectateMode.SelectedIndex = 0;
         }
@@ -146,6 +146,11 @@ namespace TournamentCodeGenerator
                 result.Append(characters[random.Next(characters.Length)]);
             }
             return result.ToString();
+        }
+
+        private void Button2_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(Result.Text);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
