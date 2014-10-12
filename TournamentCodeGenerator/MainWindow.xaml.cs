@@ -110,6 +110,30 @@ namespace TournamentCodeGenerator
             item.Value = 6;
             Type.Items.Add(item);
             Type.SelectedIndex = 0;
+
+            item = new ComboboxItem();
+            item.Text = "No Spectators";
+            item.Value = "NONE";
+            SpectateMode.Items.Add(item);
+            SpectateMode.SelectedIndex = 0;
+
+            item = new ComboboxItem();
+            item.Text = "Lobby Only";
+            item.Value = "LOBBYONLY";
+            SpectateMode.Items.Add(item);
+            SpectateMode.SelectedIndex = 0;
+
+            item = new ComboboxItem();
+            item.Text = "Friends List Only";
+            item.Value = "DROPINONLY";
+            SpectateMode.Items.Add(item);
+            SpectateMode.SelectedIndex = 0;
+
+            item = new ComboboxItem();
+            item.Text = "All";
+            item.Value = "ALL";
+            SpectateMode.Items.Add(item);
+            SpectateMode.SelectedIndex = 0;
         }
         public static string RandomGen(int length)
         {
@@ -140,18 +164,36 @@ namespace TournamentCodeGenerator
             Result.Text += "/map" + (Map.SelectedItem as ComboboxItem).Value.ToString();
             Result.Text += "/pick" + (Type.SelectedItem as ComboboxItem).Value.ToString();
             Result.Text += "/team" + (Map.SelectedItem as ComboboxItem).Players.ToString();
-            if ((bool)Spec.IsChecked)
-                Result.Text += "/spec" + "ALL";
-            else
-                Result.Text += "/spec" + "NONE";
-
+            Result.Text += "/spec" + (SpectateMode.SelectedItem as ComboboxItem).Value.ToString();
             string json = "";
+
+            if (String.IsNullOrEmpty(Report.Text))
+            {                
                 json = "{ \"name\": \"" + name + "\", \"password\": \"" + pass + "\" }";
+            }
+            else if (!String.IsNullOrEmpty(Extra.Text))
+            {
+                json = "{ \"name\": \"" + name + "\",\"extra\":\""+ Extra.Text +"\" \"password\": \"" + pass + "\" \"report\":\""+ Report.Text +"\"}";
+            }
+            else
+            {
+                json = "{ \"name\": \"" + name + "\",\"extra\":\"\" \"password\": \"" + pass + "\" \"report\":\"" + Report.Text + "\"}";
+            }
 
             //Also "report" to get riot to send a report back, and "extra" to have data sent so you can identify it (passbackDataPacket)
 
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(json);
             Result.Text += "/" + System.Convert.ToBase64String(plainTextBytes);
+        }
+        private void Extra_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            char c = Convert.ToChar(e.Text);
+            if (Char.IsNumber(c))
+                e.Handled = false;
+            else
+                e.Handled = true;
+
+            base.OnPreviewTextInput(e);
         }
     }
     public class ComboboxItem
