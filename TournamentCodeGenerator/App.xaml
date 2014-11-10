@@ -3,6 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <x:Array x:Key="FactionTeamTypes" Type="sys:String"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib">
+            <sys:String>Bilgewater</sys:String>
+            <sys:String>Freljord</sys:String>
+            <sys:String>Ionia</sys:String>
+            <sys:String>Shadow Isles</sys:String>
+            <sys:String>Demacia</sys:String>
+            <sys:String>Noxus</sys:String>
+            <sys:String>Piltover</sys:String>
+            <sys:String>Bandle City</sys:String>
+            <sys:String>Zaun</sys:String>
+            <sys:String>Void</sys:String>
+            <sys:String>Shurima</sys:String>
+            <sys:String>Discord</sys:String>
+        </x:Array>
     </Application.Resources>
+
 </Application>

@@ -169,7 +169,10 @@ namespace TournamentCodeGenerator
             }
             else if (!name.ToLower().Contains("'s game"))
                 name += "'s game";
-
+            if ((bool)teams.IsChecked)
+            {
+                name += "~" + Team1.Text + ":" + Team2.Text;
+            }
             Result.Text = "pvpnet://lol/customgame/joinorcreate";
             Result.Text += "/map" + (Map.SelectedItem as ComboboxItem).Value.ToString();
             Result.Text += "/pick" + (Type.SelectedItem as ComboboxItem).Value.ToString();
